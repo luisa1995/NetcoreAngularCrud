@@ -1,0 +1,100 @@
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100 card text-black">
+     
+       
+              <div class="col-md-10 col-lg-10 col-xl-8 order-2 order-lg-1">
+                <p class="text-center h1 fw-bold mb-7 mx-1 mx-md-4 mt-4">Agregar Personas</p>
+               
+                  <div class="starter-template">
+                    <div class="row">
+                      <div class="col-md-12 mt-5">
+
+                        <form [formGroup]="personasForm" (ngSubmit)="validateEvents()">
+                          <div class="row">
+                            <div class="form-group col-md-6">
+                              <label for="TipoIdentificacion">Tipo Identificación</label>
+                              <select id="TipoIdentificacion" formControlName="TipoIdentificacion" class="form-control">
+                                <option value="cc" selected>Cédula de Ciudadania</option>
+                                <option value="ce">Cédula de Extranjeria</option>
+                              </select>
+                              <div style="color:red;">*</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="NoIdentificacion">No Identificación</label>
+                              <input type="text" class="form-control" id="NoIdentificacion"
+                                formControlName="NoIdentificacion" />
+                              <div style="color:red;">*</div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="form-group col-md-6">
+                              <label for="Nombres">Nombres</label>
+                              <input type="text" class="form-control" id="Nombres" formControlName="Nombres" />
+                              <div style="color:red;">*</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="Apellidos">Apellidos</label>
+                              <input type="text" class="form-control" id="Apellidos" formControlName="Apellidos" />
+                              <div style="color:red;">*</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="Email">Email</label>
+                              <input type="email" class="form-control" id="Email" formControlName="Email" />
+                            </div>
+                          </div>
+                          <br />
+                          <button type="submit" [disabled]="personasForm.invalid" style="float: right"
+                            class="btn btn-primary">
+                            Guardar
+                          </button>
+                          <br />
+                        </form>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th scope="col">Tipo Identificación</th>
+                            <th scope="col">No Identificación</th>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Email</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let item of personaslist">
+                          <tr>
+                            <th scope="row">{{item.identificador}}</th>
+                            <th>{{item.tipoIdentificacion}}</th>
+                            <td>{{item.noIdentificacion}}</td>
+                            <td>{{item.nombres}}</td>
+                            <td>{{item.apellidos}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.fechaCreacion}}</td>
+                            <td><a (click)="EditData(item)" class="btn btn-warning">Edit</a></td>
+                            <td><a (click)="deleteData(item.identificador)" class="btn btn-danger">Delete</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+               
+
+
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-3 d-flex align-items-center order-1 order-lg-2">
+
+                <img src="https://img.freepik.com/vector-premium/dibujos-animados-personas-diferentes-profesiones_105738-55.jpg?w=2000"
+                  class="img-fluid" alt="Sample image">
+
+              </div>
+            </div>
+          </div>
+
+     
+
+</section>
