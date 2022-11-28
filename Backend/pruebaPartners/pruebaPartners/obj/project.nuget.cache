@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SJoV09gMspLh72Azw5Xtcw0Jm8m3mpXngbQpUByB8yNs9nLbiZXZZr2+9YUjTfe6iZmohaD6uRDaZIRdu9tTyw==",
+  "dgSpecHash": "XJlPEfjKLlamVZICti0XaoECT7y+SVumgR+pZ8SQCVf9XzORg/lD3HfEf8xgUflXg9GfzWfdex10YWBgBrTvRA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\USUARIO\\source\\repos\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj",
+  "projectFilePath": "C:\\Users\\USUARIO\\Documents\\GitHub\\NetcoreAngularCrud\\Backend\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USUARIO\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\USUARIO\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

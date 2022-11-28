@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USUARIO\\source\\repos\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj": {}
+    "C:\\Users\\USUARIO\\Documents\\GitHub\\NetcoreAngularCrud\\Backend\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USUARIO\\source\\repos\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj": {
+    "C:\\Users\\USUARIO\\Documents\\GitHub\\NetcoreAngularCrud\\Backend\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USUARIO\\source\\repos\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj",
+        "projectUniqueName": "C:\\Users\\USUARIO\\Documents\\GitHub\\NetcoreAngularCrud\\Backend\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj",
         "projectName": "pruebaPartners",
-        "projectPath": "C:\\Users\\USUARIO\\source\\repos\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj",
+        "projectPath": "C:\\Users\\USUARIO\\Documents\\GitHub\\NetcoreAngularCrud\\Backend\\pruebaPartners\\pruebaPartners\\pruebaPartners.csproj",
         "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USUARIO\\source\\repos\\pruebaPartners\\pruebaPartners\\obj\\",
+        "outputPath": "C:\\Users\\USUARIO\\Documents\\GitHub\\NetcoreAngularCrud\\Backend\\pruebaPartners\\pruebaPartners\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
