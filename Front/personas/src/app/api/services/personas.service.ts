@@ -264,7 +264,7 @@ export class PersonasService extends BaseService {
   /**
    * Path part for operation apiPersonasIdPut
    */
-  static readonly ApiPersonasIdPutPath = '/api/personas/{id}';
+  static readonly ApiPersonasIdPutPath = '/api/personas';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -273,7 +273,6 @@ export class PersonasService extends BaseService {
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
   apiPersonasIdPut$Response(params: {
-    id: number;
     context?: HttpContext
     body?: Personas
   }
@@ -281,7 +280,6 @@ export class PersonasService extends BaseService {
 
     const rb = new RequestBuilder(this.rootUrl, PersonasService.ApiPersonasIdPutPath, 'put');
     if (params) {
-      rb.path('id', params.id, {});
       rb.body(params.body, 'application/*+json');
     }
 
@@ -318,7 +316,7 @@ export class PersonasService extends BaseService {
   /**
    * Path part for operation apiPersonasIdDelete
    */
-  static readonly ApiPersonasIdDeletePath = '/api/personas/{id}';
+  static readonly ApiPersonasIdDeletePath = '/api/personas';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -327,14 +325,14 @@ export class PersonasService extends BaseService {
    * This method doesn't expect any request body.
    */
   apiPersonasIdDelete$Response(params: {
-    id: number;
     context?: HttpContext
+    body?: Personas
   }
 ): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, PersonasService.ApiPersonasIdDeletePath, 'delete');
     if (params) {
-      rb.path('id', params.id, {});
+      rb.body(params.body, 'application/*+json');
     }
 
     return this.http.request(rb.build({

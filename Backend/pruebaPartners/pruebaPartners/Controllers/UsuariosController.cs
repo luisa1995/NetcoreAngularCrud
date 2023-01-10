@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using pruebaPartners.DataContext;
+﻿using Datos.Models;
+using Microsoft.AspNetCore.Mvc;
+using Negocios.Interface;
 using pruebaPartners.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,19 +11,21 @@ namespace pruebaPartners.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        readonly UsuariosContext UsuarDetails;
-        public UsuariosController(UsuariosContext usuariosContext)
-        {
-            UsuarDetails = usuariosContext;
-        }
+        private readonly IUsuarios _usuarios;
+        protected Response _response;
 
+        public UsuariosController(IUsuarios usuarios)
+        {
+            _usuarios = usuarios;
+            _response = new Response();
+        }
 
         // GET: api/<UsuariosController>
         [HttpGet]
-        public IEnumerable<Usuarios> Get()
+        public IActionResult Get()
         {
-            var data = UsuarDetails.Usuarios.ToList();
-            return data;
+            var lista = _usuarios.GetUsuarios();
+            return Ok(lista);
         }
 
         // POST api/<UsuariosController>
@@ -30,28 +33,81 @@ namespace pruebaPartners.Controllers
         public IActionResult Post([FromBody] Usuarios objUsuario)
         {
             objUsuario.FechaCreacion = DateTime.Now;
-            UsuarDetails.Usuarios.Add(objUsuario);
-            UsuarDetails.SaveChanges();
-            return Ok();
+            List<Usuarios> listadto = new List<Usuarios>();
+
+            try
+            {
+                listadto = _usuarios.GetUsuariosById(objUsuario.Usuario);
+
+                if (listadto.Count() > 0)
+                    return BadRequest("Ya existe este usuario");
+
+                _usuarios.InsertUsuarios(objUsuario);
+                var lista = _usuarios.GetUsuarios();
+                _response.DisplayMessage = "Guardado correctamente";
+                return Ok(lista);
+
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Error al guardar usuario";
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+                return BadRequest(_response);
+            }            
         }
 
-        // PUT api/<UsuariosController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Usuarios objUsuario)
+        // PUT api/<UsuariosController>
+        [HttpPut]
+        public IActionResult Put([FromBody] Usuarios objUsuario)
         {
-            UsuarDetails.Usuarios.Update(objUsuario);
-            UsuarDetails.SaveChanges();
-            return Ok();
+            objUsuario.FechaCreacion = DateTime.Now;
+            List<Usuarios> listadto = new List<Usuarios>();
+
+            try
+            {
+                listadto = _usuarios.GetUsuariosById(objUsuario.Usuario);
+
+                if (listadto.Count() > 0 && listadto[0].Identificador != objUsuario.Identificador)
+                {
+                    return BadRequest("Ya existe este usuario");
+                }
+                else
+                {
+                    _usuarios.UpdateUsuarios(objUsuario);
+                    var lista = _usuarios.GetUsuarios();
+                    _response.DisplayMessage = "Actualizado correctamente";
+                    return Ok(lista);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Error al actualizar usuario";
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+                return BadRequest(_response);
+            }
         }
 
-        // DELETE api/<UsuariosController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        // DELETE api/<UsuariosController>
+        [HttpDelete]
+        public IActionResult Delete([FromBody] Usuarios objUsuario)
         {
-            var data = UsuarDetails.Usuarios.Where(a => a.Identificador == id).FirstOrDefault();
-            UsuarDetails.Usuarios.Remove(data);
-            UsuarDetails.SaveChanges();
-            return Ok();
+            try
+            {              
+                _usuarios.DeleteUsuarios(objUsuario);
+                var lista = _usuarios.GetUsuarios();
+                _response.DisplayMessage = "Eliminado correctamente";
+                return Ok(lista);
+                
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Error al eliminar usuario";
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+                return BadRequest(_response);
+            }
 
         }
     }

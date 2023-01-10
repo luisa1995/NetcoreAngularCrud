@@ -31,7 +31,9 @@ export class PersonasFormComponent implements OnInit {
     this.ser.apiPersonasGet$Json$Response().subscribe(data => {
       this.personaslist = data.body;
     },
-      error => console.log(error));
+    error => {
+      alert(error.error);        
+    });
   }
 
 
@@ -43,20 +45,24 @@ export class PersonasFormComponent implements OnInit {
         this.ngOnInit();
         this.clear();
       },
-        error => console.log(error));
+      error => {
+        alert(error.error);        
+      });
   }
 
   update() {
-    this.ser.apiPersonasIdPut$Response({ id: this.personasForm.value.Identificador, body: this.personasForm.value })
+    this.ser.apiPersonasIdPut$Response({body: this.personasForm.value })
       .subscribe(data => {
         this.ngOnInit();
         this.clear();
       },
-        error => console.log(error));
+      error => {
+        alert(error.error);        
+      });
   }
 
   EditData(item: any) {
-    this.personasForm.controls["Identificador"].setValue(item.identificador);
+   this.personasForm.controls["Identificador"].setValue(item.identificador);
     this.personasForm.controls["TipoIdentificacion"].setValue(item.tipoIdentificacion);
     this.personasForm.controls["NoIdentificacion"].setValue(item.noIdentificacion);
     this.personasForm.controls["Nombres"].setValue(item.nombres);
@@ -64,14 +70,18 @@ export class PersonasFormComponent implements OnInit {
     this.personasForm.controls["Email"].setValue(item.email);
     this.personasForm.controls["FechaCreacion"].setValue(item.fechaCreacion);
     this.EventValue = "update";
+    
   }
 
-  deleteData(Id: number) {
-    this.ser.apiPersonasIdDelete$Response({ id: Id })
+  deleteData(item: any) {
+    this.ser.apiPersonasIdDelete$Response({ body: item })
       .subscribe(data => {
         this.ngOnInit();
+        this.clear();
       },
-        error => console.log(error));
+      error => {
+        alert(error.error);        
+      });
   }
 
   validateEvents(){
@@ -84,5 +94,6 @@ export class PersonasFormComponent implements OnInit {
   }
   clear(){
     this.personasForm.reset();
+    this.EventValue = "save";
   }
 }

@@ -14,7 +14,8 @@
                           <div class="row">
                             <div class="form-group col-md-6">
                               <label for="TipoIdentificacion">Tipo Identificación</label>
-                              <select id="TipoIdentificacion" formControlName="TipoIdentificacion" class="form-control">
+                              <select id="TipoIdentificacion" formControlName="TipoIdentificacion" class="form-control" 
+                                    [attr.disabled]="EventValue !== 'save' ? true : null">
                                 <option value="cc" selected>Cédula de Ciudadania</option>
                                 <option value="ce">Cédula de Extranjeria</option>
                               </select>
@@ -23,7 +24,7 @@
                             <div class="form-group col-md-6">
                               <label for="NoIdentificacion">No Identificación</label>
                               <input type="text" class="form-control" id="NoIdentificacion"
-                                formControlName="NoIdentificacion" />
+                                formControlName="NoIdentificacion" [attr.disabled]="EventValue !== 'save' ? true : null"/>
                               <div style="color:red;">*</div>
                             </div>
                           </div>
@@ -48,6 +49,10 @@
                           <button type="submit" [disabled]="personasForm.invalid" style="float: right"
                             class="btn btn-primary">
                             Guardar
+                          </button>
+                          <button type="button" (click)="clear();"  style="float: right"
+                            class="btn btn-warning">
+                            Limpiar
                           </button>
                           <br />
                         </form>
@@ -74,9 +79,9 @@
                             <td>{{item.nombres}}</td>
                             <td>{{item.apellidos}}</td>
                             <td>{{item.email}}</td>
-                            <td>{{item.fechaCreacion}}</td>
+                            <td>{{item.fechaCreacion | date: 'dd/MMM/yyyy'}}</td>
                             <td><a (click)="EditData(item)" class="btn btn-warning">Edit</a></td>
-                            <td><a (click)="deleteData(item.identificador)" class="btn btn-danger">Delete</a></td>
+                            <td><a (click)="deleteData(item)" class="btn btn-danger">Delete</a></td>
                           </tr>
                         </tbody>
                       </table>

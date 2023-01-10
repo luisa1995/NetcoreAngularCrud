@@ -25,3 +25,7 @@ export interface LoginModel {
     usuario: string;
     password: string;
 }
+
+export interface Response{
+    result:string;
+}

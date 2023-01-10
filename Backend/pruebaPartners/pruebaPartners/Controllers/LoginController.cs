@@ -4,7 +4,7 @@ using pruebaPartners.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using pruebaPartners.DataContext;
+using Datos.Context;
 
 [Route("api/[controller]")]
 [ApiController]

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl,FormBuilder,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debug } from 'console';
 
 import {UsuariosService} from 'src/app/api/services'
 import {Usuarios} from 'src/app/interface/general'
@@ -11,8 +12,7 @@ import {Usuarios} from 'src/app/interface/general'
   styleUrls: ['./usuario-form.component.css']
 })
 export class UsuarioFormComponent implements OnInit {
-
-
+  
   usuariosForm = this.fb.group({
     usuario: ['',Validators.required],
     password: ['',Validators.required],   
@@ -32,6 +32,8 @@ export class UsuarioFormComponent implements OnInit {
         alert("Guardado Exitosamente");
         this.router.navigateByUrl('/listaUsuarios');
       },
-       error => console.log(error));
+       error => {
+        alert(error.error);        
+       })
   }
 }

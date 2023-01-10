@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Datos.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using pruebaPartners.DataContext;
+using Negocios.Interface;
 using pruebaPartners.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,26 +12,21 @@ namespace pruebaPartners.Controllers
     [ApiController]
     public class PersonasController : ControllerBase
     {
-        readonly PersonasContext PersonasDetails;
-        public PersonasController(PersonasContext personasContext)
+        private readonly IPersonas _personas;
+        protected Response _response;
+        public PersonasController(IPersonas personas)
         {
-            PersonasDetails = personasContext;
+            _personas = personas;
+            _response = new Response();
         }
         // GET: api/<personas>
         [HttpGet]
-        public IEnumerable<Personas> Get()
+        public IActionResult Get()
         {
-            var data = PersonasDetails.Personas.ToList();
-            return data;
+            var lista = _personas.GetPersonas();
+            _response.Result = lista;
+            return Ok(lista);
         }
-
-        // GET api/<personas>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
     
         [HttpPost]
         public IActionResult Post([FromBody] Personas objpersonas)
@@ -38,32 +34,75 @@ namespace pruebaPartners.Controllers
             objpersonas.FechaCreacion = DateTime.Now;
             objpersonas.NombresyApellidos = objpersonas.Nombres + ' ' + objpersonas.Apellidos;
             objpersonas.IdentificacionyNoIdentificacion = objpersonas.TipoIdentificacion + ' ' + objpersonas.NoIdentificacion;
-           
-            PersonasDetails.Personas.Add(objpersonas);
-            PersonasDetails.SaveChanges();
-            return Ok();
+
+            List<Personas> listadto = new List<Personas>();
+            try
+            {
+                listadto = _personas.GetPersonasById(objpersonas.NoIdentificacion);
+
+                if (listadto.Count() > 0)
+                    return BadRequest("Ya existe esta persona");
+
+                _personas.InsertPersonas(objpersonas);
+                var lista = _personas.GetPersonas();
+                _response.Result = lista;
+                _response.DisplayMessage = "Guardado correctamente";
+                return Ok(lista);
+
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Error al guardar usuario";
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+                return BadRequest(_response);
+            }     
         }
 
-        // PUT api/<personas>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Personas objpersonas)
+        // PUT api/<personas>
+        [HttpPut]
+        public IActionResult Put([FromBody] Personas objpersonas)
         {
             objpersonas.NombresyApellidos = objpersonas.Nombres + ' ' + objpersonas.Apellidos;
             objpersonas.IdentificacionyNoIdentificacion = objpersonas.TipoIdentificacion + ' ' + objpersonas.NoIdentificacion;
 
-            PersonasDetails.Personas.Update(objpersonas);
-            PersonasDetails.SaveChanges();
-            return Ok();
+            try
+            {
+                _personas.UpdatePersonas(objpersonas);
+                var lista = _personas.GetPersonas();
+                _response.Result = lista;
+                _response.DisplayMessage = "Actualizado correctamente";
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Error al actualizar usuario";
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+                return BadRequest(_response);
+            }
         }
 
-        // DELETE api/<personas>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        // DELETE api/<personas>
+        [HttpDelete]
+        public IActionResult Delete([FromBody] Personas objpersonas)
         {
-            var data = PersonasDetails.Personas.Where(a => a.Identificador == id).FirstOrDefault();
-            PersonasDetails.Personas.Remove(data);
-            PersonasDetails.SaveChanges();
-            return Ok();
+            try
+            {                
+                _personas.DeletePersonas(objpersonas);
+                var lista = _personas.GetPersonas();
+                _response.Result = lista;
+                _response.DisplayMessage = "Eliminar correctamente";
+                return Ok(lista);
+                
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.DisplayMessage = "Error al eliminar usuario";
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+                return BadRequest(_response);
+            }
         }
     }
 }
