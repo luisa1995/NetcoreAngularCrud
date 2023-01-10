@@ -23,7 +23,6 @@
     "@okta/okta-signin-widget": "^7.0.2",
     "bootstrap": "^5.2.3",
     "jquery": "^3.6.1",
-    "ngx-cookie-service": "^15.0.0",
     "rxjs": "~7.5.0",
     "swagger-ui": "^4.15.5",
     "tslib": "^2.3.0",

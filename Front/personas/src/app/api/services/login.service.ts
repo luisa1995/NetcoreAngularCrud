@@ -8,7 +8,6 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
 
 import { Usuarios } from '../models/usuarios';
 
@@ -18,8 +17,7 @@ import { Usuarios } from '../models/usuarios';
 export class LoginService extends BaseService {
   constructor(
     config: ApiConfiguration,
-    http: HttpClient,
-    private cookies: CookieService
+    http: HttpClient
   ) {
     super(config, http);
   }
@@ -74,13 +72,6 @@ export class LoginService extends BaseService {
     return this.apiLoginLoginPost$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
-  }
-
-  setToken(token: string) {
-    this.cookies.set("token", token);
-  }
-  getToken() {
-    return this.cookies.get("token");
   }
 
 }
